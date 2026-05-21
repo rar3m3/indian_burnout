@@ -1,12 +1,14 @@
 import pandas as pd
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 #import data csv
 df = pd.read_csv('indian_developer_burnout_2026.csv')
-print(df.info())
+#print(df.info())
 
-#ducplicate check (only for id, because reasons)
-print(sum(df.duplicated(subset=['developer_id'])))
+#duplicate check (only for id, because reasons)
+#print(sum(df.duplicated(subset=['developer_id'])))
 
 #function to replace missing numeric values with average if no zeros, else with zeros
 def replace_nulls(df, column):                    
@@ -34,6 +36,18 @@ df['therapy_or_counseling'] = df['therapy_or_counseling'].fillna('NA')
 
 #recheck for nulls
 na_counts = df.isna().sum()
-print(na_counts)
+#print(na_counts)
+
+#convert 'remote_work_ratio' to actual ratio
+df['remote_work_ratio'] = df['remote_work_ratio']/100
+
+#remove unnecessary columns
+df = df.drop(labels=['city','state','age','gender','marital_status','education_level','company_type','company_size','job_role','tech_stack',],axis=1)
+
+#comment on gender parity in README (keep gender column) print(df['gender'].value_counts())
+#comment on marital_status correlation to anxiety, stress and burnout
+
+print(df.info())
+
 
 
